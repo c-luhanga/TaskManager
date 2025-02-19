@@ -11,30 +11,29 @@ export class TasksController {
 
   @Get()
   async getTasks(@Request() req) {
-    return this.tasksService.getTasks(req.user.id);
+    return this.tasksService.getTasks(req.user.userId);
   }
-
+  
   @Post()
   async createTask(@Request() req, @Body() createTaskDto: CreateTaskDto) {
-    return this.tasksService.createTask(req.user.id, createTaskDto);
+    return this.tasksService.createTask(req.user.userId, createTaskDto);
   }
-
+  
   @Put(':id')
-async updateTask(
-  @Param('id') id: number,
-  @Body() updateTaskDto: UpdateTaskDto,
-  @Request() req,
-): Promise<Task> {
-  // Convert id to number and pass the DTO and user ID
-  const taskId = +id;
-  return this.tasksService.updateTask(taskId, updateTaskDto, req.user.id);
-}
-
-@Delete(':id')
-async deleteTask(
-  @Param('id', ParseIntPipe) id: number,
-  @Request() req
-): Promise<void> {
-  return this.tasksService.deleteTask(id, req.user.id);
-}
+  async updateTask(
+    @Param('id') id: number,
+    @Body() updateTaskDto: UpdateTaskDto,
+    @Request() req,
+  ): Promise<Task> {
+    const taskId = +id;
+    return this.tasksService.updateTask(taskId, updateTaskDto, req.user.userId);
+  }
+  
+  @Delete(':id')
+  async deleteTask(
+    @Param('id', ParseIntPipe) id: number,
+    @Request() req
+  ): Promise<void> {
+    return this.tasksService.deleteTask(id, req.user.userId);
+  }
 }

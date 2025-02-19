@@ -3,19 +3,22 @@ import { User } from '../users/user.entity';
 
 @Entity()
 export class Task {
-  @PrimaryGeneratedColumn('increment')
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'varchar' })
+  @Column()
   title: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({ nullable: true })
   description: string;
 
-  @Column({ type: 'boolean', default: false })
+  @Column({ default: false })
   isComplete: boolean;
 
-  @ManyToOne(() => User, user => user.tasks)
+  @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
+  
+  @Column()
+  userId: number;
 }

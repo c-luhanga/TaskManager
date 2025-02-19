@@ -16,6 +16,7 @@ import { TasksModule } from './tasks/tasks.module';
       database: process.env.DB_NAME,
       autoLoadEntities: true,
       synchronize: true,  // Auto-create tables (disable in production)
+      logging: true, // Add this to see SQL queries
     }), AuthModule, TasksModule,
   ],
 })

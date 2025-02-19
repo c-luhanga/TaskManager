@@ -16,26 +16,35 @@ export class TasksService {
 
   async getTasks(userId: number): Promise<Task[]> {
     return this.taskRepository.find({
-      where: { user: { id: userId } },
+      where: { 
+        user: { id: userId } 
+      },
+      relations: ['user'],
+      order: {
+        id: 'DESC' 
+      }
     });
   }
 
   async createTask(userId: number, createTaskDto: CreateTaskDto): Promise<Task> {
     // First, find the user
-    const user = await this.userRepository.findOne({ where: { id: userId } });
+    const user = await this.userRepository.findOne({ 
+      where: { id: userId }
+    });
+    
     if (!user) {
       throw new NotFoundException('User not found');
     }
-
+  
     // Create and save the task with the user relation
     const task = this.taskRepository.create({
       ...createTaskDto,
       user: user,
+      userId: user.id // Explicitly set the userId
     });
-
+  
     return await this.taskRepository.save(task);
   }
-
 
   async updateTask(id: number, updateTaskDto: UpdateTaskDto, userId: number): Promise<Task> {
     const task = await this.taskRepository.findOne({
