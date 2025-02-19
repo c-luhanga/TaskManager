@@ -77,7 +77,7 @@ npm install
 npm run start:dev
 ```
 
-The API will be available at `http://localhost:3000`
+The API will be available at `http://localhost:3001`
 
 ### Frontend Setup
 
@@ -91,7 +91,7 @@ npm install
 2. Create `.env` file in frontend directory:
 
 ```plaintext
-VITE_API_URL=http://localhost:3000
+VITE_API_URL=http://localhost:3001
 ```
 
 3. Start the development server:
@@ -166,7 +166,7 @@ taskmanagement/
 ### Register a New User
 
 ```bash
-curl -X POST http://localhost:3000/auth/register \
+curl -X POST http://localhost:3001/auth/register \
   -H "Content-Type: application/json" \
   -d '{"username": "testuser", "password": "password123"}'
 ```
@@ -174,14 +174,14 @@ curl -X POST http://localhost:3000/auth/register \
 ### Login
 
 ```bash
-curl -X POST http://localhost:3000/auth/login \
+curl -X POST http://localhost:3001/auth/login \
   -H "Content-Type: application/json" \
   -d '{"username": "testuser", "password": "password123"}'
 ```
 
 ## 💰 Salary Expectations
 
-Expected monthly salary range: $8,000 - $12,000 USD, depending on the overall compensation package and benefits offered.
+Expected monthly salary range: $3,360 - $4,000 USD, depending on the overall compensation package and benefits offered.
 
 ## 🚀 Future Improvements
 
