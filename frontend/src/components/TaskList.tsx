@@ -78,83 +78,113 @@ const TaskList: React.FC = () => {
   };
 
  return (
-    <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-lg">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-gray-800">Task Manager</h1>
-          <span className="text-gray-600">Welcome, {localStorage.getItem('username')}</span>
-          <button
-            onClick={handleLogout}
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
-          >
-            Logout
-          </button>
+  <div className="min-vh-100 d-flex flex-column">
+  {/* Navbar - Full width, fixed top */}
+  <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div className="container-fluid px-4">
+      <span className="navbar-brand">
+        <i className="bi bi-check2-square me-2"></i>
+        Task Manager
+      </span>
+      <div className="d-flex align-items-center">
+        <span className="text-light me-3">
+          <i className="bi bi-person-circle me-2"></i>
+          {localStorage.getItem('username')}
+        </span>
+        <button
+          onClick={handleLogout}
+          className="btn btn-outline-light"
+        >
+          <i className="bi bi-box-arrow-right me-2"></i>
+          Logout
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  {/* Main Content - Full width with padding */}
+  <div className="flex-grow-1 bg-light">
+    <div className="container-fluid px-4 py-4">
+      {error && (
+        <div className="alert alert-danger" role="alert">
+          <i className="bi bi-exclamation-triangle me-2"></i>
+          {error}
         </div>
-      </nav>
+      )}
 
-      <main className="max-w-4xl mx-auto p-4 mt-8">
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
-            {error}
-          </div>
-        )}
-
-        <div className="bg-white rounded-lg shadow p-6">
-          <div className="mb-6 flex gap-2">
-            <input
-              type="text"
-              value={newTaskTitle}
-              onChange={(e) => setNewTaskTitle(e.target.value)}
-              placeholder="Enter task title"
-              className="flex-1 p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onKeyPress={(e) => e.key === 'Enter' && handleCreateTask()}
-            />
-            <button
-              onClick={handleCreateTask}
-              className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 transition-colors"
-            >
-              Add Task
-            </button>
-          </div>
-
-          <ul className="space-y-3">
-            {tasks.map((task) => (
-              <li
-                key={task.id}
-                className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <span className={`${task.isComplete ? 'line-through text-gray-500' : 'text-gray-800'}`}>
-                  {task.title}
-                </span>
-                <div className="space-x-2">
+      {/* Add Task Form */}
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-8">
+          <div className="card shadow-sm mb-4">
+            <div className="card-body">
+              <form onSubmit={(e) => { e.preventDefault(); handleCreateTask(); }}>
+                <div className="input-group input-group-lg">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="What needs to be done?"
+                    value={newTaskTitle}
+                    onChange={(e) => setNewTaskTitle(e.target.value)}
+                  />
                   <button
-                    onClick={() => handleToggleTask(task.id, !task.isComplete)}
-                    className={`px-3 py-1 rounded transition-colors ${
-                      task.isComplete 
-                        ? 'bg-green-500 hover:bg-green-600' 
-                        : 'bg-gray-500 hover:bg-gray-600'
-                    } text-white`}
+                    type="submit"
+                    className="btn btn-primary px-4"
+                    disabled={!newTaskTitle.trim()}
                   >
-                    {task.isComplete ? '✓' : '○'}
-                  </button>
-                  <button
-                    onClick={() => handleDeleteTask(task.id)}
-                    className="px-3 py-1 rounded bg-red-500 hover:bg-red-600 text-white transition-colors"
-                  >
-                    ×
+                    <i className="bi bi-plus-lg me-2"></i>
+                    Add Task
                   </button>
                 </div>
-              </li>
-            ))}
-            {tasks.length === 0 && (
-              <li className="text-center py-8 text-gray-500">
-                No tasks yet. Add your first task above!
-              </li>
-            )}
-          </ul>
+              </form>
+            </div>
+          </div>
+
+          {/* Tasks List */}
+          <div className="card shadow-sm">
+            <div className="card-body">
+              <h5 className="card-title mb-4">My Tasks</h5>
+              {tasks.length === 0 ? (
+                <div className="text-center text-muted py-5">
+                  <i className="bi bi-inbox display-1"></i>
+                  <p className="mt-3 fs-5">No tasks yet. Add your first task above!</p>
+                </div>
+              ) : (
+                <div className="list-group">
+                  {tasks.map((task) => (
+                    <div
+                      key={task.id}
+                      className="list-group-item d-flex justify-content-between align-items-center py-3"
+                    >
+                      <div className="d-flex align-items-center">
+                        <button
+                          onClick={() => handleToggleTask(task.id, !task.isComplete)}
+                          className={`btn btn-lg me-3 ${
+                            task.isComplete ? 'btn-success' : 'btn-outline-secondary'
+                          }`}
+                        >
+                          <i className={`bi ${task.isComplete ? 'bi-check-lg' : 'bi-circle'}`}></i>
+                        </button>
+                        <span className={`fs-5 ${task.isComplete ? 'text-decoration-line-through text-muted' : ''}`}>
+                          {task.title}
+                        </span>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteTask(task.id)}
+                        className="btn btn-outline-danger btn-lg"
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
-      </main>
+      </div>
     </div>
+  </div>
+</div>
   );
 };
 

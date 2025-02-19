@@ -21,58 +21,84 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-md">
-        <h2 className="text-center text-3xl font-bold">Login</h2>
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {error}
+    <div className="min-vh-100 d-flex flex-column">
+    {/* Header */}
+    <nav className="navbar navbar-dark bg-primary w-100">
+      <div className="container">
+        <span className="navbar-brand">
+          <i className="bi bi-check2-square me-2"></i>
+          Task Manager
+        </span>
+      </div>
+    </nav>
+
+    {/* Main Content */}
+    <div className="flex-grow-1 container-fluid px-4 py-4">
+      <div className="row justify-content-center">
+        <div className="col-12 col-sm-8 col-md-6 col-lg-4">
+          <div className="card shadow-sm">
+            <div className="card-body p-4">
+              <h2 className="card-title text-center mb-4">Welcome Back</h2>
+              {error && (
+                <div className="alert alert-danger" role="alert">
+                  <i className="bi bi-exclamation-triangle me-2"></i>
+                  {error}
+                </div>
+              )}
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="username" className="form-label">Username</label>
+                  <div className="input-group input-group-lg">
+                    <span className="input-group-text">
+                      <i className="bi bi-person"></i>
+                    </span>
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="password" className="form-label">Password</label>
+                  <div className="input-group input-group-lg">
+                    <span className="input-group-text">
+                      <i className="bi bi-lock"></i>
+                    </span>
+                    <input
+                      type="password"
+                      className="form-control"
+                      id="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      required
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="btn btn-primary btn-lg w-100 mb-3">
+                  <i className="bi bi-box-arrow-in-right me-2"></i>
+                  Login
+                </button>
+                <div className="text-center">
+                  <button
+                    type="button"
+                    onClick={() => navigate('/register')}
+                    className="btn btn-link text-decoration-none"
+                  >
+                    <i className="bi bi-person-plus me-2"></i>
+                    Need an account? Register
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-        )}
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium">
-              Username
-            </label>
-            <input
-              id="username"
-              type="text"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium">
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md"
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            Login
-          </button>
-        </form>
-        <div className="text-center">
-          <button
-            onClick={() => navigate('/register')}
-            className="text-blue-600 hover:text-blue-800"
-          >
-            Need an account? Register
-          </button>
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
