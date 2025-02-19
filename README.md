@@ -179,10 +179,6 @@ curl -X POST http://localhost:3001/auth/login \
   -d '{"username": "testuser", "password": "password123"}'
 ```
 
-## 💰 Salary Expectations
-
-Expected monthly salary range: $3,360 - $4,000 USD, depending on the overall compensation package and benefits offered.
-
 ## 🚀 Future Improvements
 
 1. Add task categories/labels
