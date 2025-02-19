@@ -22,6 +22,7 @@ const TaskList: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
     navigate('/login');
   };
 
@@ -81,6 +82,7 @@ const TaskList: React.FC = () => {
       <nav className="bg-white shadow-lg">
         <div className="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-gray-800">Task Manager</h1>
+          <span className="text-gray-600">Welcome, {localStorage.getItem('username')}</span>
           <button
             onClick={handleLogout}
             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"

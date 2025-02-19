@@ -13,6 +13,7 @@ const Login: React.FC = () => {
     try {
       const res = await login(username, password);
       localStorage.setItem('token', res.data.token);
+      localStorage.setItem('username', username); 
       navigate('/tasks');
     } catch (err: any) {
       setError(err.response?.data?.message || 'Login failed');
